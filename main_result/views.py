@@ -7,5 +7,6 @@ def result(request):
 	# print(request.POST['jdata'])
 	a = json.loads(request.POST['jdata'])
 	result = FilterResult(a)
-	print(result.getResult())
+	# print()
+	result.getResult()
 	return render(request, 'test.html', {'v':a})
