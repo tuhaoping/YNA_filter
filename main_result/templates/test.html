@@ -1,3 +1,15 @@
-<div>
-	{{ v }}
+<div class="table" style="border:1px solid #c5c5c5; padding:5px;">
+	<table id="result_table">
+		<thead>
+			<th>Gene name</th>
+		</thead>
+		<tbody>
+			{% for g in gene %}
+				<tr>
+					<td>{{ g }}</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+		
+	</table>
 </div>

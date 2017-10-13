@@ -8,5 +8,5 @@ def result(request):
 	a = json.loads(request.POST['jdata'])
 	result = FilterResult(a)
 	# print()
-	result.getResult()
-	return render(request, 'test.html', {'v':a})
+	gene_set = sorted(list(result.getResult()))
+	return render(request, 'test.html', {'gene':gene_set})

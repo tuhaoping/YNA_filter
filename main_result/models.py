@@ -66,8 +66,9 @@ class FilterResult():
 			}
 		}
 
-	def getResult(self):
+	def getResult(self, result_type = 'intersection'):
 		# return self.query_item
+		self.result_gene = set()
 		for i, data in self.query_item.items():
 			data_list = {k:[] for k in self.table[i].keys()}
 			for f in data:
@@ -78,18 +79,45 @@ class FilterResult():
 				if data:
 					table_count = self.table[i][table]['table']
 					if table_count == 1:	# 資料表只有一張
-						print("SELECT Name_ORF FROM {} WHERE {}".format("yna_filter_"+table, " AND ".join(data)))
+						sql_com = "SELECT Name_ORF FROM {} WHERE {}".format("yna_filter_"+table, " AND ".join(data))
 					else:	# 資料表有一張以上
 						table_list = ['yna_filter_{}_{}'.format(table, i) for i in range(table_count)]
 						sql_com = "SELECT {} FROM {}".format(table_list[0]+'.Name_ORF', table_list[0])
 						for _i, t in enumerate(table_list[1:]): #LEFT JOIN 起來
 							sql_com = "{} LEFT JOIN {} ON {}={}".format(sql_com, t, table_list[_i]+'.Name_ORF', t+'.Name_ORF')
 
-						sql_com = "{} WHERE {}".format(sql_com, " AND ".join(data))
-						print(sql_com)
-		return self.query_item
+						
+						if result_type == 'intersection':
+							sql_com = "{} WHERE {}".format(sql_com, " AND ".join(data))
+						else:
+							sql_com = "{} WHERE {}".format(sql_com, " OR ".join(data))
+
+
+						# print(sql_com)
+
+				try:
+					db = MySQLdb.connect('localhost', 'haoping', 'a012345', 'yna_database')
+					cursor = db.cursor()
+					cursor.execute(sql_com)
+					if not self.result_gene:
+						self.result_gene = {i[0] for i in cursor.fetchall()}
+					else:
+						if result_type == 'intersection':
+							self.result_gene &= {i[0] for i in cursor.fetchall()}
+						else:
+							self.result_gene |= {i[0] for i in cursor.fetchall()}
+
+						# print(i)
+				except:
+					pass
+				finally:
+					db.close()
+
+		print(len(self.result_gene))
+		return self.result_gene
 		# try:
 		# 	db = MySQLdb.connect('localhost', 'haoping', 'a012345', 'yna_database')
+		# 	cursor = db.cursor()
 
 		# except Exception as e:
 		# 	raise e

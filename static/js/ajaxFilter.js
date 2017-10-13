@@ -19,6 +19,7 @@ $(document).ready(function(){
 
 	// Submit YNA filter set value to backend
 	$("#submit-btn").click(function(){
+		$("#feature_accordion .collapse").collapse('hide'); //close all collapse
 		let jdata = {};
 		for (var i = 1; i < 5; i++) {
 			
@@ -32,9 +33,8 @@ $(document).ready(function(){
 				return $(this).val() + "_" + type + "_" + compare + "_" + value;
 			}).get();
 		};
-		console.log(jdata);
 	
-		 $.ajax({
+		$.ajax({
 	    	url:"/result/",
 	    	data:{
 	    		jdata: JSON.stringify(jdata),
@@ -42,7 +42,8 @@ $(document).ready(function(){
 	    	type:"POST",
 	    	success:function(d){
 	    		$("#resultDiv").html(d);
-	    		console.log(d);
+	    		$("#result_table").DataTable();
+	    		// console.log(d);
 	    	},
 	    });
 
