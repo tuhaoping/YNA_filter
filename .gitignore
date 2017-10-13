@@ -1,2 +1,14 @@
-
 *.pyc
+main_result/__pycache__/__init__.cpython-36.pyc
+main_result/__pycache__/__init__.cpython-36.pyc
+*.pyc
+main_result/migrations/__pycache__/__init__.cpython-36.pyc
+yna_filter/__pycache__/__init__.cpython-36.pyc
+main_result/__pycache__/__init__.cpython-36.pyc
+main_result/__pycache__/admin.cpython-36.pyc
+main_result/migrations/__pycache__/__init__.cpython-36.pyc
+yna_filter/__pycache__/__init__.cpython-36.pyc
+yna_filter/__pycache__/settings.cpython-36.pyc
+yna_filter/__pycache__/urls.cpython-36.pyc
+yna_filter/__pycache__/views.cpython-36.pyc
+yna_filter/__pycache__/wsgi.cpython-36.pyc
