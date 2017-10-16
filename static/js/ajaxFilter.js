@@ -38,6 +38,7 @@ $(document).ready(function(){
 	    	url:"/result/",
 	    	data:{
 	    		jdata: JSON.stringify(jdata),
+	    		composition: $("#Composition").val(),
 	    	},
 	    	type:"POST",
 	    	success:function(d){

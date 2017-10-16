@@ -46,58 +46,63 @@
 		<div class="row">
 			<div class="col-1"></div>
 			<div class="col-10" role="tablist" id="feature_accordion">
+				Composition Option:
+				<select id="Composition">
+					<option value="intersection">Intersection</option>
+					<option value="Union">Union</option>
+				</select>
 				<!-- <form> -->
-						{% for Patterns, patterns_data in item.items %}
-  						<div class="card">
-  							<div class="card-header" role="tab" id="heading{{forloop.counter}}">
-						      <h5 class="mb-0">
-						        <a class="collapsed" data-toggle="collapse" href="#collapse{{forloop.counter}}" aria-expanded="false" aria-controls="collapse{{forloop.counter}}">
-						          {{ Patterns }} &nbsp;&nbsp;[ <span class="track">0</span> tracks]
-						        </a>
-						      </h5>
-						    </div>
-						    <div id="collapse{{forloop.counter}}" class="collapse" role="tabpanel" aria-labelledby="heading{{forloop.counter}}" data-parent="#feature_accordion">
-						      <div class="card-body">
-						      	{% for feature_class, feature_list in patterns_data.items %}
-											<div class="row">
-												<div class="col-12 feature_class">{{ feature_class }}</div>
+				{% for Patterns, patterns_data in item.items %}
+					<div class="card">
+						<div class="card-header" role="tab" id="heading{{forloop.counter}}">
+				      <h5 class="mb-0">
+				        <a class="collapsed" data-toggle="collapse" href="#collapse{{forloop.counter}}" aria-expanded="false" aria-controls="collapse{{forloop.counter}}">
+				          {{ Patterns }} &nbsp;&nbsp;[ <span class="track">0</span> tracks ]
+				        </a>
+				      </h5>
+				    </div>
+				    <div id="collapse{{forloop.counter}}" class="collapse" role="tabpanel" aria-labelledby="heading{{forloop.counter}}" data-parent="#feature_accordion">
+				      	<div class="card-body">
+					      	{% for feature_class, feature_list in patterns_data.items %}
+								<div class="row">
+									<div class="col-12 feature_class">{{ feature_class }}</div>
+								</div>
+								<div class="row form-group">
+								{% for feature in feature_list %}
+									<div class="col-6 feature">
+										<div class="row">
+											<div class="col-md-12 col-xl-6">
+												<label class="custom-control custom-checkbox">
+												  <input type="checkbox" class="custom-control-input feature-checkbox" value="{{ feature }}">
+												  <span class="custom-control-indicator"></span>
+												  <span class="custom-control-description">{{ feature }}</span>
+												</label>
 											</div>
-											<div class="row form-group">
-											{% for feature in feature_list %}
-												<div class="col-6 feature">
-													<div class="row">
-														<div class="col-md-12 col-xl-6">
-															<label class="custom-control custom-checkbox">
-															  <input type="checkbox" class="custom-control-input feature-checkbox" value="{{ feature }}">
-															  <span class="custom-control-indicator"></span>
-															  <span class="custom-control-description">{{ feature }}</span>
-															</label>
-														</div>
-														<div class="col-md-12 col-xl-6">
-															<div class="">
-																<select class="custom-select d-inline" disabled>
-																	<option value="Pro">promoter</option>
-																	<option value="Code">Coding Region</option>
-																</select>
-																<select class="custom-select d-inline" disabled>
-																	{# <option value=">">></option> #}
-																	<option value=">=">>=</option>
-																	{# <option value="<">&#60;</option> #}
-																	<option value="<=">&#60;=</option>
-																</select>
-																<input type="text" class="form-control d-inline value" style="width:10%;" value="2.0" disabled>
-															</div>
-														</div>
-													</div>
+											<div class="col-md-12 col-xl-6">
+												<div class="">
+													<select class="custom-select d-inline" disabled>
+														<option value="Pro">promoter</option>
+														<option value="Code">Coding Region</option>
+													</select>
+													<select class="custom-select d-inline" disabled>
+														{# <option value=">">></option> #}
+														<option value=">=">>=</option>
+														{# <option value="<">&#60;</option> #}
+														<option value="<=">&#60;=</option>
+													</select>
+													<input type="text" class="form-control d-inline value" style="width:10%;" value="2.0" disabled>
 												</div>
-											{% endfor %}
 											</div>
-										{% endfor %}
-						        
-						      </div>
-						    </div>
-							</div>
-						{% endfor %}
+										</div>
+									</div>
+								{% endfor %}
+								</div>
+							{% endfor %}
+				        
+				      	</div>
+				    </div>
+					</div>
+				{% endfor %}
 				<!-- </form> -->
 				<button type="button" class="btn btn-primary w-100" id="submit-btn">Submit</button>
 			</div>

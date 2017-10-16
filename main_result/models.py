@@ -113,8 +113,8 @@ class FilterResult():
 				finally:
 					db.close()
 
-		print(len(self.result_gene))
-		return self.result_gene
+		# print(len(self.result_gene))
+		return self.result_gene, len(self.result_gene)
 		# try:
 		# 	db = MySQLdb.connect('localhost', 'haoping', 'a012345', 'yna_database')
 		# 	cursor = db.cursor()

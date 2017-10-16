@@ -17,9 +17,9 @@ def HomePage(request):
 			'H2B Ubiquitination (WildType)':['H2BK123ub vs H2'],
 			'H2B Ubiquitination (Mutant)':['H2BK123ub vs H2 [ubp8D]', 'H2BK123ub vs H2 [ubp10D]']
 		},
-		'Regulatory Protein Binding Sites':{
-			'Regulatory Protein Binding Sites':['Ada2','Ahc1','Aor1','Arp6','Ash1','Bre1','Bre2','Chd1','Dot1','Eaf3','Elp3','Epl1','Esa1','Gcn5','Hda1','Hfi1','Hos1','Hos2','Hos3','Htz1','Ino80','Ioc2','Ioc3','Ioc4','Isw1','Isw2','Itc1','Jhd1','Jhd2','Nap1','Nhp6a','Pob3','Rad6','Rpd3','Rph1','Rsc1','Rsc2','Rsc4','Rsc8','Rsc9','Rtt109','Rvb1','Rvb2','Rxt1','Rxt2','Sas4','Set1','Set2','Sif2','Sin3','Sir2','Sir3','Snf2','Snf5','Spt16','Spt2','Spt20','Spt3','Spt6','Spt7','Spt8','Swc1','Swi3','Swr1','Taf10','Taf14','Taf5','Taf9','Ubp8','Ume6','Vps72','Yaf9','Yng1']
-		}
+		# 'Regulatory Protein Binding Sites':{
+		# 	'Regulatory Protein Binding Sites':['Ada2','Ahc1','Aor1','Arp6','Ash1','Bre1','Bre2','Chd1','Dot1','Eaf3','Elp3','Epl1','Esa1','Gcn5','Hda1','Hfi1','Hos1','Hos2','Hos3','Htz1','Ino80','Ioc2','Ioc3','Ioc4','Isw1','Isw2','Itc1','Jhd1','Jhd2','Nap1','Nhp6a','Pob3','Rad6','Rpd3','Rph1','Rsc1','Rsc2','Rsc4','Rsc8','Rsc9','Rtt109','Rvb1','Rvb2','Rxt1','Rxt2','Sas4','Set1','Set2','Sif2','Sin3','Sir2','Sir3','Snf2','Snf5','Spt16','Spt2','Spt20','Spt3','Spt6','Spt7','Spt8','Swc1','Swi3','Swr1','Taf10','Taf14','Taf5','Taf9','Ubp8','Ume6','Vps72','Yaf9','Yng1']
+		# }
 	}
 	
 
