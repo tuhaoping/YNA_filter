@@ -6,9 +6,10 @@ class FilterResult():
 	"""docstring for FilterResult"""
 	def __init__(self,item):
 		self.query_item = {i:[_d.split("_") for _d in d] for i,d in item.items() if d}
+		self.result_gene = set()
 		self.table = {
 			'1':{
-				"hmacwt":{
+				"HmAcWt":{
 					'table':2,
 					'per_table_data':5,
 					'H3K4ac vs H3':'0',
@@ -16,7 +17,7 @@ class FilterResult():
 					'H3K14ac vs H3 [YPD]':'2',
 					'H4ac vs H3 [YPD]':'5'
 				},
-				'hmacmut':{
+				'HmAcMut':{
 					'table':1,
 					'per_table_data':2,
 					'H3K4ac [set1D] vs [WT]':'0',
@@ -24,7 +25,7 @@ class FilterResult():
 				}
 			},
 			'2':{
-				'hmmewt':{
+				'HmMeWt':{
 					'table':3,
 					'per_table_data':5,
 					'H3K4me3 vs H3 [WCE]':'0',
@@ -35,7 +36,7 @@ class FilterResult():
 					'H3K4me2 vs H3':'6',
 					'H3R2me2a vs H3':'8'
 				},
-				'hmmemut':{
+				'HmMeMut':{
 					'table':1,
 					'per_table_data':5,
 					'H3K4me3 vs H3 [ubp8D]':'0',
@@ -46,18 +47,18 @@ class FilterResult():
 				}
 			},
 			'3':{
-				'h2az':{
+				'H2AZ':{
 					'table':1,
 					'per_table_data':2,
 					'H2A.Z vs H2B':'0',
 					'H2A vs H2B':'1'
 				},
-				'h2ubiwt':{
+				'H2UbiWt':{
 					'table':1,
 					'per_table_data':2,
 					'H2BK123ub vs H2':'0'
 				},
-				'h2ubimut':{
+				'H2UbiMut':{
 					'table':1,
 					'per_table_data':2,
 					'H2BK123ub vs H2 [ubp8D]':'0',
@@ -67,21 +68,20 @@ class FilterResult():
 		}
 
 	def getResult(self, result_type = 'intersection'):
-		# return self.query_item
-		self.result_gene = set()
 		for i, data in self.query_item.items():
 			data_list = {k:[] for k in self.table[i].keys()}
 			for f in data:
 				for f_class, table in self.table[i].items():
 					if f[0] in table:
 						data_list[f_class].append("Data{}_{} {} {}".format(table[f[0]], f[1], f[2], f[3]))
+				# print(data_list)
 			for table, data in data_list.items():
 				if data:
 					table_count = self.table[i][table]['table']
 					if table_count == 1:	# 資料表只有一張
-						sql_com = "SELECT Name_ORF FROM {} WHERE {}".format("yna_filter_"+table, " AND ".join(data))
+						sql_com = "SELECT Name_ORF FROM {} WHERE {}".format("YNA_Filter_"+table, " AND ".join(data))
 					else:	# 資料表有一張以上
-						table_list = ['yna_filter_{}_{}'.format(table, i) for i in range(table_count)]
+						table_list = ['YNA_Filter_{}_{}'.format(table, i) for i in range(table_count)]
 						sql_com = "SELECT {} FROM {}".format(table_list[0]+'.Name_ORF', table_list[0])
 						for _i, t in enumerate(table_list[1:]): #LEFT JOIN 起來
 							sql_com = "{} LEFT JOIN {} ON {}={}".format(sql_com, t, table_list[_i]+'.Name_ORF', t+'.Name_ORF')
@@ -91,8 +91,6 @@ class FilterResult():
 							sql_com = "{} WHERE {}".format(sql_com, " AND ".join(data))
 						else:
 							sql_com = "{} WHERE {}".format(sql_com, " OR ".join(data))
-
-
 						# print(sql_com)
 
 				try:
@@ -114,10 +112,17 @@ class FilterResult():
 					db.close()
 
 		# print(len(self.result_gene))
-		return self.result_gene, len(self.result_gene)
-		# try:
-		# 	db = MySQLdb.connect('localhost', 'haoping', 'a012345', 'yna_database')
-		# 	cursor = db.cursor()
+		return len(self.result_gene)
 
-		# except Exception as e:
-		# 	raise e
+	def getGeneName(self):
+		try:
+			db = MySQLdb.connect('localhost', 'haoping', 'a012345', 'yna_database')
+			cursor = db.cursor()
+			cursor.execute("SELECT `Name_Gene`, `Name_Alias` FROM YNA_Genome_Info WHERE `Name_ORF` IN ('{}')".format("','".join(self.result_gene)))
+			self.result_gene = [[ORF, i[0], i[1]] for ORF, i in zip(sorted(list(self.result_gene)), cursor.fetchall())]
+		except:
+			pass
+		finally:
+			db.close()
+
+		return self.result_gene

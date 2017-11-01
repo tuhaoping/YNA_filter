@@ -1,7 +1,8 @@
 from django.shortcuts import render
-from django.views.decorators.csrf import ensure_csrf_cookie
+from django.views.decorators.csrf import ensure_csrf_cookie, csrf_exempt
 
-@ensure_csrf_cookie
+# @ensure_csrf_cookie
+@csrf_exempt
 def HomePage(request):
 	filter_item = {
 		'Histone Acetylation Patterns ':{

@@ -17,10 +17,13 @@ from django.conf.urls import url
 from django.contrib import admin
 from .views import HomePage
 from main_result.views import result
+from download.views import downloadfile
 
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^home/$', HomePage),
-    url(r'^result/$',result)
+    url(r'^result/$',result),
+
+    url(r'^download/(\w+)$',downloadfile),
 ]

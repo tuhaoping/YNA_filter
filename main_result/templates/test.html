@@ -1,16 +1,37 @@
 <div class="table" style="border:1px solid #c5c5c5; padding:5px;">
-	<span class="float-left">The list mode displays <span class="text-danger">{{ total}}</span> results matching following filtering criteria.</span><br><br>
+	<span class="float-left">The list mode displays <span class="text-danger">{{ total }}</span> results matching following filtering criteria.</span><br>
+	<span class="float-left">Chromatin Structure Reg.[<span class="text-danger">{{ composition }}</span>]:</span><br>
+	<div style="width:fit-content; max-height:100px; overflow-y:scroll;">
+	{% for c in condiction %}
+		<span class="float-left text-danger">
+		&nbsp;- {{ c.0 }} {{ c.2 }} {{ c.3 }} in
+		{% if c.1 == 'Pro' %}
+			Promoter&nbsp;
+		{% else %}
+			Coding Region&nbsp;
+		{% endif %}
+		</span><br>
+	{% endfor %}
+	</div>
+	
+	<br>
 	<table id="result_table">
 		<thead>
-			<th>Gene name</th>
+			<th class="text-center" style="width:30%;">Feature name</th>
+			<th class="text-center" style="width:30%;">Standard name</th>
+			<th class="text-center" style="width:40%;">Alias</th>
 		</thead>
 		<tbody>
 			{% for g in gene %}
 				<tr>
-					<td>{{ g }}</td>
+					<td>{{ g.0 }}</td>
+					<td>{{ g.1 }}</td>
+					<td>{{ g.2 }}</td>
 				</tr>
 			{% endfor %}
 		</tbody>
 		
 	</table>
+	<hr>
+	<a class="btn btn-block btn-secondary" href="/download/genelist">download</a>
 </div>

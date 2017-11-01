@@ -8,6 +8,10 @@ def result(request):
 	a = json.loads(request.POST['jdata'])
 	result = FilterResult(a)
 	# print()
-	gene_set, total = result.getResult(request.POST['composition'])
-	gene_set = sorted(list(gene_set))
-	return render(request, 'test.html', {'gene':gene_set, 'total':total})
+	total = result.getResult(request.POST['composition'])
+	gene_set = result.getGeneName()
+	# print(json.dumps(gene_set))
+	request.session['genelist'] = json.dumps(gene_set)
+	item = [_d.split("_") for i,d in a.items() for _d in d if d]
+	# print(item)
+	return render(request, 'test.html', {'gene':gene_set, 'total':total, 'composition':request.POST['composition'], 'condiction':item})
