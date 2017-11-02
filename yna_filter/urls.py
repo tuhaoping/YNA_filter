@@ -18,6 +18,7 @@ from django.contrib import admin
 from .views import HomePage
 from main_result.views import result
 from download.views import downloadfile
+from enrichment.views import showEnrich
 
 
 urlpatterns = [
@@ -26,4 +27,6 @@ urlpatterns = [
     url(r'^result/$',result),
 
     url(r'^download/(\w+)$',downloadfile),
+
+    url(r'^enrich/$',showEnrich),
 ]

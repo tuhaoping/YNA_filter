@@ -13,5 +13,6 @@ def result(request):
 	# print(json.dumps(gene_set))
 	request.session['genelist'] = json.dumps(gene_set)
 	item = [_d.split("_") for i,d in a.items() for _d in d if d]
+	request.session['geneset'] = ','.join([g[0] for g in gene_set])
 	# print(item)
 	return render(request, 'test.html', {'gene':gene_set, 'total':total, 'composition':request.POST['composition'], 'condiction':item})

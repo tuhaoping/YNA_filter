@@ -45,6 +45,18 @@ $(document).ready(function(){
 	    		$("#resultDiv").html(d);
 	    		$("#result_table").DataTable();
 	    		// console.log(d);
+
+	    		$.ajax({
+	    			url:"/enrich/",
+	    			type:"GET",
+	    			success:function(d){
+						$("#EnrichmentDiv").html(d);
+			    		$("#enrich_table").DataTable({
+			    			// 'order': [[3, "asc"]]
+			    			'order': [[3, "asc"], [0, 'desc']]
+			    		});
+	    			}
+	    		});
 	    	},
 	    });
 
