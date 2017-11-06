@@ -20,7 +20,8 @@ def showEnrich(request):
 		temp_enrich = []
 		temp_intersects = []
 
-		gene = [set(i.pro_en.split(',')), set(i.pro_de.split(',')), set(i.cod_en.split(',')), set(i.cod_de.split(','))]
+		gene = [set(i.pro_en.split(',')), set(), set(i.cod_en.split(',')), set()]
+		# gene = [set(i.pro_en.split(',')), set(i.pro_de.split(',')), set(i.cod_en.split(',')), set(i.cod_de.split(','))]
 		# temp_enrich.append(i.Type)
 		# print(i.Type)
 		
@@ -54,7 +55,7 @@ def Hypergeometric_pvalue(T, S, G, F=6576):
     G_T = G-T
     F_G_S_T = F-G-S+T
 
-    pvalue = scipy.stats.fisher_exact( [ [T,G_T] , [S_T,F_G_S_T]] ,'greater')[1]*46
+    pvalue = scipy.stats.fisher_exact( [ [T,G_T] , [S_T,F_G_S_T]] ,'greater')[1]
     # less = stats.fisher_exact( [ [T,G_T] , [S_T,F_G_S_T]] ,'less')[1]
     
     # return pvalue
