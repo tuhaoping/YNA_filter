@@ -1,144 +1,166 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-	<meta charset="UTF-8">
-	<title>YNA</title>
-	{% load static %}
+    <meta charset="UTF-8">
+    <title>YNA</title>
+    {% load static %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <script src="{% static 'js/cookie.js' %}"></script>
+    <style>
+    #main-table input {
+        padding: .3rem .2rem .3rem .2rem;
+        height: calc(2.25rem + 2px);
+        font-size: 0.75rem;
+    }
 
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
-	<script src = "{% static 'js/cookie.js' %}"></script>
-	<style>
-		#main-table input{
-			padding: .3rem .2rem .3rem .2rem;
-			height: calc(2.25rem + 2px);
-			font-size: 0.75rem;
-		}
-		input[type=search] {
-			-webkit-appearance:searchfield;
-		}
-	</style>
+    input[type=search] {
+        -webkit-appearance: searchfield;
+    }
+    </style>
 </head>
+
 <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">YNA Filter&#60;beta&#62;</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Link</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Disabled</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <br>
+    <div class="container-fluid" id='main-table'>
+    	<div class="row">
+            <div class="col-1"></div>
+    		<div class="col-10">
+    			<label class="switch m-0">
+					<input type="checkbox" id="switch">
+					<span class="slider round"></span>
+				</label>
+    		</div>
+    	</div>
+        <div class="row">
+            <div class="col-1"></div>
+            <div class="col-2 pr-0" id="geneText-div">
+            	<div style="height:25.2">Gene Input:</div>
+            	<textarea id="genetextarea" class="form-control pr-0"></textarea>
+            </div>
+            <div class="col-8 div-disabled" id="feature-div">
+                Composition Option:
+                <select id="Composition">
+                    <option value="intersection">Intersection</option>
+                    <option value="Union">Union</option>
+                </select>
+                <!-- <form> -->
+                <div role="tablist" id="feature_accordion">
+                {% for Patterns, patterns_data in item.items %}
+                <div class="card">
+                    <div class="card-header" role="tab" id="heading{{forloop.counter}}">
+                        <h5 class="mb-0">
+				        <a data-toggle="collapse" data-parent="#feature_accordion" href="#collapse{{forloop.counter}}" aria-expanded="false" aria-controls="collapse{{forloop.counter}}">
+				          {{ Patterns }} &nbsp;&nbsp;[ <span class="track">0</span> tracks ]
+				        </a>
+				    </h5>
+                    </div>
+                    <div id="collapse{{forloop.counter}}" class="collapse" role="tabpanel" aria-labelledby="heading{{forloop.counter}}" data-parent="#feature_accordion">
+                        <div class="card-body" style="height:336px; overflow-y:scroll">
+                            {% for feature_class, feature_list in patterns_data.items %}
+                            <div class="row">
+                                <div class="col-12 feature_class" style="background-color:#e9ecef">{{ feature_class }}</div>
+                            </div>
+                            <div class="row form-group">
+                                {% for feature in feature_list %}
+                                <div class="col-6 feature">
+                                    <div class="row">
+                                        <div class="col-md-12 col-xl-12">
+                                            <label class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input feature-checkbox" value="{{ feature }}">
+                                                <span class="custom-control-indicator"></span>
+                                                <span class="custom-control-description" style="font-size:15px;">{{ feature }}</span>
+                                            </label>
+                                        </div>
+                                        <div class="col-md-12 col-xl-12">
+                                            <div class="">
+                                                <select class="custom-select d-inline" disabled>
+                                                    <option value="Pro">Promoter</option>
+                                                    <option value="Code">Coding Region</option>
+                                                </select>
+                                                <select class="custom-select d-inline" disabled>
+                                                    {#
+                                                    <option value=">">></option> #}
+                                                    <option value=">=">>=</option>
+                                                    {#
+                                                    <option value="<">&#60;</option> #}
+                                                    <option value="<=">&#60;=</option>
+                                                </select>
+                                                <input type="text" class="form-control d-inline value" style="width:10%;" value="2.0" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                <!-- </form> -->
+                </div>
+            </div>
+            <div class="col-1"></div>
+        </div>
+        <div class="row">
+            <div class="col-1"></div>
+            <div class="col-10">
+                <button type="button" class="btn btn-primary w-100" id="submit-btn" style="margin-top:10px;">Submit</button>
+            </div>
+            <div class="col-1"></div>
+        </div>
+    </div>
+    <br>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-1"></div>
+            <div class="col-10 text-center" id="resultDiv">
+                --result--
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-1"></div>
+            <div class="col-10 text-center" id="EnrichmentDiv"></div>
+        </div>
+    </div>
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+    <script src="{% static 'js/index.js' %}"></script>
+    <script src="{% static 'js/ajaxFilter.js' %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'jquery/DataTables/datatables.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/switch.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}">
+    <script type="text/javascript" charset="utf8" src="{% static '/jquery/DataTables/datatables.min.js' %}"></script>
+    <script>
+    $(document).ready(function() {
+        // $("#collapse1").show(500);
+        $("#heading1 a").trigger('click');
 
-	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-		<a class="navbar-brand" href="#">YNA Filter&#60;beta&#62;</a>
-		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-
-<!-- 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
-		    <ul class="navbar-nav mr-auto">
-				<li class="nav-item active">
-		        	<a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-		    	</li>
-		    	<li class="nav-item">
-		        	<a class="nav-link" href="#">Link</a>
-		    	</li>
-		    	<li class="nav-item">
-		        	<a class="nav-link disabled" href="#">Disabled</a>
-		    	</li>
-		    </ul>
-		</div> -->
-	</nav>
-
-	<br>
-	<div class="container-fluid" id='main-table'>
-		<div class="row">
-			<div class="col-1"></div>
-			<div class="col-10" role="tablist" id="feature_accordion">
-				Composition Option:
-				<select id="Composition">
-					<option value="intersection">Intersection</option>
-					<option value="Union">Union</option>
-				</select>
-				<!-- <form> -->
-						{% for Patterns, patterns_data in item.items %}
-  						<div class="card">
-  							<div class="card-header" role="tab" id="heading{{forloop.counter}}">
-						      <h5 class="mb-0">
-						        <a class="collapsed" data-toggle="collapse" href="#collapse{{forloop.counter}}" aria-expanded="false" aria-controls="collapse{{forloop.counter}}">
-						          {{ Patterns }} &nbsp;&nbsp;[ <span class="track">0</span> tracks ]
-						        </a>
-						      </h5>
-						    </div>
-						    <div id="collapse{{forloop.counter}}" class="collapse" role="tabpanel" aria-labelledby="heading{{forloop.counter}}" data-parent="#feature_accordion">
-						      <div class="card-body">
-						      	{% for feature_class, feature_list in patterns_data.items %}
-											<div class="row">
-												<div class="col-12 feature_class">{{ feature_class }}</div>
-											</div>
-											<div class="row form-group">
-											{% for feature in feature_list %}
-												<div class="col-6 feature">
-													<div class="row">
-														<div class="col-md-12 col-xl-6">
-															<label class="custom-control custom-checkbox">
-															  <input type="checkbox" class="custom-control-input feature-checkbox" value="{{ feature }}">
-															  <span class="custom-control-indicator"></span>
-															  <span class="custom-control-description">{{ feature }}</span>
-															</label>
-														</div>
-														<div class="col-md-12 col-xl-6">
-															<div class="">
-																<select class="custom-select d-inline" disabled>
-																	<option value="Pro">Promoter</option>
-																	<option value="Code">Coding Region</option>
-																</select>
-																<select class="custom-select d-inline" disabled>
-																	{# <option value=">">></option> #}
-																	<option value=">=">>=</option>
-																	{# <option value="<">&#60;</option> #}
-																	<option value="<=">&#60;=</option>
-																</select>
-																<input type="text" class="form-control d-inline value" style="width:10%;" value="2.0" disabled>
-															</div>
-														</div>
-													</div>
-												</div>
-											{% endfor %}
-											</div>
-										{% endfor %}
-						        
-						      </div>
-						    </div>
-							</div>
-						{% endfor %}
-				<!-- </form> -->
-				<button type="button" class="btn btn-primary w-100" id="submit-btn">Submit</button>
-			</div>
-			<div class="col-1"></div>
-		</div>
-	</div>
-	<br>
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-1"></div>
-			<div class="col-10 text-center" id="resultDiv">
-				--result--
-			</div>
-		</div>
-	</div>
-
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-1"></div>
-			<div class="col-10 text-center" id="EnrichmentDiv"></div>
-		</div>
-	</div>
-
-	<script src="{% static 'js/jquery.min.js' %}"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
-	<script src="{% static 'js/index.js' %}"></script>
-	<script src="{% static 'js/ajaxFilter.js' %}"></script>
-	<link rel="stylesheet" type="text/css" href="{% static 'jquery/DataTables/datatables.min.css' %}">
-	<script type="text/javascript" charset="utf8" src="{% static '/jquery/DataTables/datatables.min.js' %}"></script>
-	<script>
-		$(document).ready(function(){
-			// $("#collapse1").show(500);
-			$("#heading1 a").trigger('click');
-
-		});
-	</script>
+    });
+    </script>
 </body>
+
 </html>

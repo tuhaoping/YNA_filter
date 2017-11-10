@@ -1,0 +1,17 @@
+.geneText-close {
+	height: 145.8px !important;
+	-webkit-transition: .4s;
+	transition: .4s;
+}
+
+#genetextarea {
+	height: 100%;
+	max-height:481.8px;
+	resize:none;
+}
+
+
+.div-disabled {
+    pointer-events: none;
+    opacity: 0.4;	
+}

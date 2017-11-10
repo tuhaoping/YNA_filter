@@ -6,4 +6,25 @@ $(document).ready(function(){
 		let now_card = $(this).closest('div.card');
 		now_card.find('span.track').text(now_card.find('input[type=checkbox]:checked').length);
 	});
+
+	$("#collapse1, #collapse2, #collapse3").on('show.bs.collapse', function(){
+		$("#genetextarea").removeClass('geneText-close');
+	});
+
+	$('#genetextarea').focus(function(){
+		$("#genetextarea").removeClass('geneText-close');
+		$("#collapse1").collapse('show');
+	});
+
+	$("#switch").click(function(){
+		if($("#switch").prop("checked")){
+			$("#feature-div").removeClass("div-disabled");
+			$("#geneText-div").addClass("div-disabled");
+		}
+		else {
+			$("#feature-div").addClass("div-disabled");
+			$("#geneText-div").removeClass("div-disabled");
+		}
+		// console.log($("#switch").prop("checked"));
+	});
 });

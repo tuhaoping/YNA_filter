@@ -9,7 +9,10 @@ import scipy.stats
 def showEnrich(request):
 	# print(type(json.loads(request.session['geneset'])))
 	data = YnaEnrichment.objects.all()
-	geneset = set(request.session['geneset'].split(','))
+	if 'gene' in request.POST:
+		geneset = set(request.POST['gene'].split('\n'))
+	else:
+		geneset = set(request.session['geneset'].split(','))
 
 	S = len(geneset)
 	# pvalue = []

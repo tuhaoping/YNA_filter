@@ -20,6 +20,7 @@ $(document).ready(function(){
 	// Submit YNA filter set value to backend
 	$("#submit-btn").click(function(){
 		$("#feature_accordion .collapse").collapse('hide'); //close all collapse
+		$("#genetextarea").addClass('geneText-close');
 		let jdata = {};
 		for (var i = 1; i < 5; i++) {
 			
@@ -34,31 +35,51 @@ $(document).ready(function(){
 			}).get();
 		};
 	
-		$.ajax({
-	    	url:"/result/",
-	    	data:{
-	    		jdata: JSON.stringify(jdata),
-	    		composition: $("#Composition").val(),
-	    	},
-	    	type:"POST",
-	    	success:function(d){
-	    		$("#resultDiv").html(d);
-	    		$("#result_table").DataTable();
-	    		// console.log(d);
+		if($("#switch").prop("checked")){
+			$.ajax({
+		    	url:"/result/",
+		    	data:{
+		    		jdata: JSON.stringify(jdata),
+		    		composition: $("#Composition").val(),
+		    	},
+		    	type:"POST",
+		    	success:function(d){
+		    		$("#resultDiv").html(d);
+		    		$("#result_table").DataTable();
+		    		// console.log(d);
 
-	    		$.ajax({
-	    			url:"/enrich/",
-	    			type:"GET",
-	    			success:function(d){
-						$("#EnrichmentDiv").html(d);
-			    		$("#enrich_table").DataTable({
-			    			// 'order': [[3, "asc"]]
-			    			'order': [[3, "asc"], [0, 'desc']]
-			    		});
-	    			}
-	    		});
-	    	},
-	    });
+		    		$.ajax({
+		    			url:"/enrich/",
+		    			type:"GET",
+		    			success:function(d){
+							$("#EnrichmentDiv").html(d);
+				    		$("#enrich_table").DataTable({
+				    			// 'order': [[3, "asc"]]
+				    			'order': [[3, "asc"], [0, 'desc']]
+				    		});
+		    			}
+		    		});
+		    	},
+		    });
+		}
+		else{
+			$.ajax({
+    			url:"/enrich/",
+    			data:{
+    				gene:$("#genetextarea").val()
+    			},
+    			type:"POST",
+    			success:function(d){
+    				$("#resultDiv").html('')
+					$("#EnrichmentDiv").html(d);
+		    		$("#enrich_table").DataTable({
+		    			// 'order': [[3, "asc"]]
+		    			'order': [[3, "asc"], [0, 'desc']]
+		    		});
+    			}
+    		});
+
+		}
 
 
 	});
