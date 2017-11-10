@@ -10,7 +10,7 @@ def showEnrich(request):
 	# print(type(json.loads(request.session['geneset'])))
 	data = YnaEnrichment.objects.all()
 	if 'gene' in request.POST:
-		geneset = set(request.POST['gene'].split('\n'))
+		geneset = set(filter(None,request.POST['gene'].split('\n')))
 	else:
 		geneset = set(request.session['geneset'].split(','))
 
@@ -57,7 +57,11 @@ def Hypergeometric_pvalue(T, S, G, F=6576):
     S_T = S-T
     G_T = G-T
     F_G_S_T = F-G-S+T
-
+    
+    if F_G_S_T <= 0:
+    	return ""
+    
+    # print((T, S, G, F), (T, S_T, G_T, F_G_S_T))
     pvalue = scipy.stats.fisher_exact( [ [T,G_T] , [S_T,F_G_S_T]] ,'greater')[1]
     # less = stats.fisher_exact( [ [T,G_T] , [S_T,F_G_S_T]] ,'less')[1]
     
