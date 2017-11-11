@@ -20,3 +20,4 @@ main_result/__pycache__/models.cpython-36.pyc
 main_result/__pycache__/views.cpython-36.pyc
 yna_filter/__pycache__/views.cpython-36.pyc
 yna_filter/__pycache__/settings.cpython-36.pyc
+YNA_env/*
