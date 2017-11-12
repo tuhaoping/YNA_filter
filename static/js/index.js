@@ -27,4 +27,10 @@ $(document).ready(function(){
 		}
 		// console.log($("#switch").prop("checked"));
 	});
+
+	// enrichment setting checkbox
+	$("#enrich-table input[type=checkbox]").change(function(){
+		$(this).parent().siblings('input').prop('disabled', !$(this).prop('checked'));
+		console.log($(this).closest('tr').find('td').first().text() + "/" + $(this).closest('td').attr('class') + "/" + $(this).parent().siblings('input').val());
+	});
 });

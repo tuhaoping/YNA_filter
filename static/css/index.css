@@ -15,3 +15,22 @@
     pointer-events: none;
     opacity: 0.4;	
 }
+
+
+
+/*Enrich table*/
+#enrich-table td {
+	vertical-align: middle;
+}
+
+#enrich-table label {
+	margin:0px;
+	vertical-align: middle;
+}
+
+
+#enrich-table input[type=text] {
+	width: 50%;
+	padding: 4px 6px;
+	font-size:12px;
+}
