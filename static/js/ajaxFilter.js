@@ -16,6 +16,15 @@ $.ajaxSetup({
 });
 
 $(document).ready(function(){
+	$.ajax({
+		url:"/enrich/init/",
+		type:"GET",
+		success:function(d){
+			console.log(d);
+		}
+	});
+
+
 
 	// Submit YNA filter set value to backend
 	$("#submit-btn").click(function(){
@@ -83,5 +92,34 @@ $(document).ready(function(){
 
 
 	});
-		
+
+
+
+	// ajax to update SQL Views when custom setting
+	$("#enrich-table tbody input[type=text]").focusout(function(){
+		let text = $(this);
+		let feature = text.closest('tr').find('td').first().text();
+		let clss = text.closest('td').attr('class');
+		// console.log(feature + '/' + clss + '/' + text.val());
+		setTimeout(function(){
+			console.log(text.parent().find('input[type=checkbox]').prop('checked'));
+			if(text.parent().find('input[type=checkbox]').prop('checked')){
+				$.ajax({
+					url:"/enrich/update/",
+					type:"GET",
+					data:{f:feature + '/' + clss + '/' + text.val()}
+				});
+			}
+		},1000)
+	});
+
 });
+
+window.onbeforeunload = function() {
+	// console.log("leave!");
+	$.ajax({
+		async:false,
+		url:"/enrich/close/",
+		type:"GET",
+	});
+};

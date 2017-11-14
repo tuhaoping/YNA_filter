@@ -18,7 +18,7 @@ from django.contrib import admin
 from .views import HomePage
 from main_result.views import result
 from download.views import downloadfile
-from enrichment.views import showEnrich
+from enrichment.views import showEnrich, operateCustomTable
 
 
 urlpatterns = [
@@ -28,5 +28,6 @@ urlpatterns = [
 
     url(r'^download/(\w+)$',downloadfile),
 
-    url(r'^enrich/$',showEnrich),
+    url(r'^enrich/$', showEnrich),
+    url(r'^enrich/(init|close|update)/$', operateCustomTable),
 ]
