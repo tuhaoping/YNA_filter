@@ -180,9 +180,11 @@
                     </thead>
                     <tbody>
                         {% for Patterns, patterns_data in item.items %}
+                            <tr><td colspan="5" style="background-color:#ddd;">{{ Patterns }}</td></tr>
                             {% for feature_class, feature_list in patterns_data.items %}
+                                <tr class="showout"><td colspan="5" class="sub-title">{{ feature_class }}</td></tr>
                                 {% for feature in feature_list %}
-                                    <tr>
+                                    <tr class="showout">
                                         <td>{{ feature }}</td>
                                         <td class="pro enriched">
                                             <label class="custom-control custom-checkbox">

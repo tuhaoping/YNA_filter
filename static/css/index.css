@@ -34,3 +34,17 @@
 	padding: 4px 6px;
 	font-size:12px;
 }
+
+#enrich-table input.err[type=text] {
+	border-color: red;
+}
+
+#enrich-table .sub-title {
+	background-color:#e9ecef;
+	font-size:14px;
+	padding:6px 12px;
+}
+
+#enrich-table .showout {
+	/*display: none;*/
+}

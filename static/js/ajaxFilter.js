@@ -97,9 +97,25 @@ $(document).ready(function(){
 
 	// ajax to update SQL Views when custom setting
 	$("#enrich-table tbody input[type=text]").focusout(function(){
+
 		let text = $(this);
-		let feature = text.closest('tr').find('td').first().text();
 		let clss = text.closest('td').attr('class');
+
+		if (text.val() < 2 && clss.includes("enriched")){
+			text.addClass('err');
+			text.val('2.0');
+			setTimeout(function(){text.removeClass('err');}, 2000)
+			return 0;
+		}
+		else if (text.val() > 0.5 && clss.includes("depleted")){
+			text.addClass('err');
+			text.val('0.5');
+			setTimeout(function(){text.removeClass('err');}, 2000)
+			return 0;
+		}
+
+
+		let feature = text.closest('tr').find('td').first().text();
 		// console.log(feature + '/' + clss + '/' + text.val());
 		setTimeout(function(){
 			console.log(text.parent().find('input[type=checkbox]').prop('checked'));
